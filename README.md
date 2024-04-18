@@ -22,9 +22,16 @@ fn main() {
 ```
 
 The value `240` is the number of updates per second. It is _not_ the frame rate.
+Frame rate limits depend on your environment and graphics pipeline.
 In web environments, the frame rate is controlled by
 [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame),
-otherwise render is called as quickly as possible.
+otherwise render is called as quickly as possible. If vsync is enabled, most
+graphics hardware will limit the number of frames that are queued by
+synchronously blocking the code when trying to add more frames to the queue. The
+library does not have a built-in mechanism for frame rate limiting, but it's
+easy to add yourself if you want. See the example
+["Game of Life" render function](https://github.com/tuzz/game-loop/blob/master/examples/game_of_life.rs#L114-L115)
+for a simple approach.
 
 The value `0.1` is the maximum frame time which serves as an _escape hatch_ if
 your functions can't keep up with 240 updates per second. Otherwise, your game
